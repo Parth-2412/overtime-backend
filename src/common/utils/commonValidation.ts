@@ -1,10 +1,7 @@
 import { z } from "zod";
 
 export const commonValidations = {
-  id: z
-    .string()
-    .refine((data) => !Number.isNaN(Number(data)), "ID must be a numeric value")
-    .transform(Number)
-    .refine((num) => num > 0, "ID must be a positive number"),
+  address: z.string().regex(new RegExp(/^(0x)?[0-9a-fA-F]{40}$/)),
+  nonce: z.string().length(24),
   // ... other common validations
 };

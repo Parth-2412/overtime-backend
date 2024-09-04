@@ -7,15 +7,14 @@ extendZodWithOpenApi(z);
 
 export type User = z.infer<typeof UserSchema>;
 export const UserSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  email: z.string().email(),
-  age: z.number(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  address: z.string(),
+  role: z.union([z.literal("admin"), z.literal("worker")]),
 });
 
-// Input Validation for 'GET users/:id' endpoint
-export const GetUserSchema = z.object({
-  params: z.object({ id: commonValidations.id }),
+export const SignInSchema = z.object({
+  body: z.object({ address: commonValidations.address }),
+});
+
+export const VerifySchema = z.object({
+  body: z.object({ address: commonValidations.address, signedNonce: z.string() }),
 });
